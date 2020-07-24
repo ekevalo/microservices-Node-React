@@ -7,9 +7,11 @@ export default ({ comments }) => {
     if (comment.status === 'approved') {
       content = comment.content;
     }
+
     if (comment.status === 'pending') {
-      content = 'This comment is pending moderation.';
+      content = 'This comment is awaiting moderation';
     }
+
     if (comment.status === 'rejected') {
       content = 'This comment has been rejected';
     }
