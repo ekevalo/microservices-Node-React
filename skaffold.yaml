@@ -1,0 +1,60 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+metadata:
+  name: blog
+build:
+  local:
+    push: false
+  artifacts:
+  - image: ekevalo/client
+    context: client
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+        - src: 'src/**/*.js'
+          dest: .
+  - image: ekevalo/comments
+    context: comments
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+        - src: '*.js'
+          dest: .
+  - image: ekevalo/event-bus
+    context: event-bus
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+        - src: '*.js'
+          dest: .
+  - image: ekevalo/moderation
+    context: moderation
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+        - src: '*.js'
+          dest: .
+  - image: ekevalo/posts
+    context: posts
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+        - src: '*.js'
+          dest: .
+  - image: ekevalo/query
+    context: query
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+        - src: '*.js'
+          dest: .
+deploy:
+  kubectl:
+    manifests:
+    - infra/k8s/*
